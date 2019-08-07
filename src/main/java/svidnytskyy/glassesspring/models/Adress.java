@@ -10,18 +10,22 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-@ToString(exclude = {"user"})
+@ToString()
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Phone {
+
+public class Adress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    String number;
+    long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    User user;
+    String settlement;
 
-    public Phone(String number) {
-        this.number = number;
+    String deliveryMethod = DeliveryMethod.NOVA_POSHTA.name();
+
+    String branch;
+
+    public Adress(String settlement, String branch) {
+        this.settlement = settlement;
+        this.branch = branch;
     }
 }

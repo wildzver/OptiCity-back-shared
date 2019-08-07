@@ -40,7 +40,9 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     private AccountCredentials creds;
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest httpServletRequest,
+                                                HttpServletResponse httpServletResponse
+    ) throws AuthenticationException, IOException, ServletException {
         //this method react  on /login url  and retrive body from request
         //then map it to model AccountCredential
         creds = new ObjectMapper()
@@ -65,7 +67,8 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     protected void successfulAuthentication(
             HttpServletRequest req,
-            HttpServletResponse res, FilterChain chain,
+            HttpServletResponse res,
+            FilterChain chain,
             Authentication auth) throws IOException, ServletException {
 
         // if in prev method we was authenticate
@@ -73,11 +76,14 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
         String jwtoken = Jwts.builder()
                 .setSubject(auth.getName())
+                .claim("ROLE", auth.getAuthorities().iterator().next().toString())
+//                .addClaims(Collections.singletonMap("ROLE", auth.getAuthorities().iterator().next().toString()))
                 .signWith(SignatureAlgorithm.HS512, "yes".getBytes())
-                .setExpiration(new Date(System.currentTimeMillis() + 200000))
+//                .setExpiration(new Date(System.currentTimeMillis() + 200000))
                 .compact();
         //and add it to header
         res.addHeader("Authorization", "Bearer " + jwtoken);
+        System.out.println("AUTH WORK!!!" + auth.getAuthorities().iterator().next());
 
     }
 }

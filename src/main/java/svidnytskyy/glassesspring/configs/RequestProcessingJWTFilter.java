@@ -1,8 +1,10 @@
 package svidnytskyy.glassesspring.configs;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -16,7 +18,9 @@ public class RequestProcessingJWTFilter extends GenericFilterBean {
 
     // react on every url (but we can change it if implement another filter)
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request,
+                         ServletResponse response,
+                         FilterChain chain) throws IOException, ServletException {
         Authentication authentication = null;
 //
 
@@ -26,15 +30,18 @@ public class RequestProcessingJWTFilter extends GenericFilterBean {
         // if present
         if (token != null) {
             // parse it and retrive body subject from
-            String user = Jwts.parser()
+            Claims claims = Jwts.parser()
                     .setSigningKey("yes".getBytes())
                     .parseClaimsJws(token.replace("Bearer", ""))
-                    .getBody()
-                    .getSubject();
+                    .getBody();
+
+            String user = claims.getSubject();
+            String role = claims.get("ROLE", String.class);
+
             System.out.println(user + "!!!!!!!!!!!---!!!!!");
 
             //after parse of token we create Authentication object
-            authentication = new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+            authentication = new UsernamePasswordAuthenticationToken(user, null, Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role)));
         }
         // and set it to global security context
         SecurityContextHolder.getContext()
