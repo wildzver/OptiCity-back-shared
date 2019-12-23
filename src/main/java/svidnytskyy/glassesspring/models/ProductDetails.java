@@ -4,8 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+import svidnytskyy.glassesspring.repositories.PaddedIntegerBridge;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,7 +19,7 @@ import java.util.stream.Stream;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = "products")
+@EqualsAndHashCode/*(exclude = "products")*/
 @ToString(exclude = "products")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,20 +32,76 @@ public class ProductDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    //    @Size(max = 10)
-//    @Column(unique = true)
-    int modelNumber;
+    //    @Column(unique = true)
+    long modelNumber;
+
+    //    @Pattern(regexp = "^[0-9]+$", message = "pattern")
+    @SortableField(forField = "price_Sort")
+    @NumericField(forField = "price_Sort")
+    @Field(name = "price_Sort", index = Index.YES, analyze = Analyze.NO, store = Store.YES/*, bridge = @FieldBridge(impl = PaddedIntegerBridge.class)*//*, normalizer = @Normalizer(definition = "custom_normalizer")*/)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "filterAnalyzer"))
     int price;
+
     int lensWidth;
+
     int lensHeight;
-    String lensMaterial;
-    String totalWidth;
+
+//    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO, analyzer = @Analyzer(definition = "customanalyzer"))
+    @IndexedEmbedded
+    @ManyToOne(fetch = FetchType.LAZY)
+    LensMaterial lensMaterial;
+
+    int totalWidth;
     int bracketLength;
-    String frameMaterial;
-    String origin;
+
+    @IndexedEmbedded
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(/*name = "category_id"*/)
+    Category category;
+
+    @Field(name = "polarization_Filter", index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "filterAnalyzer"))
+    boolean polarization;
+
+//    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO, analyzer = @Analyzer(definition = "customanalyzer"))
+    @IndexedEmbedded
+    @ManyToOne(fetch = FetchType.LAZY)
+    FrameMaterial frameMaterial;
+
+//    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO, analyzer = @Analyzer(definition = "customanalyzer"))
+    @IndexedEmbedded
+    @ManyToOne(fetch = FetchType.LAZY)
+    Origin origin;
+
+    @IndexedEmbedded
+    @ManyToOne(fetch = FetchType.LAZY)
+    Sex sex;
+
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productDetails")
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "productDetails",
+            orphanRemoval = true)
     List<Product> products = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.setProductDetails(this);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.setProductDetails(null);
+        System.out.println("METHOD REMOVE WORKS!");
+    }
+
+
+    public ProductDetails(int price) {
+        this.price = price;
+    }
+
+
+
 
     //    @Enumerated(EnumType.STRING)
 //    @Transient
@@ -49,7 +111,6 @@ public class ProductDetails {
 //            inverseJoinColumns = {@JoinColumn(name = "lensColor_id")})
 //    @JoinColumn(name = "lensColor_id")
 //            Color lensColor;
-
 
 
     //    @Enumerated(EnumType.STRING)

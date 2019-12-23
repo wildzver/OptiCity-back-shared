@@ -2,13 +2,14 @@ package svidnytskyy.glassesspring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import svidnytskyy.glassesspring.models.LensColor;
 import svidnytskyy.glassesspring.services.LensColorService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping({"/products/lens-colors"})
+@RequestMapping({"/api/products/lens-colors"})
 public class LensColorController {
     @Autowired
     LensColorService lensColorService;
@@ -25,15 +26,18 @@ public class LensColorController {
     }
 
     @PostMapping("/add")
-    public LensColor addColor(@RequestBody LensColor lensColor){
+    public LensColor addColor(@RequestPart LensColor lensColor,
+                              @RequestParam MultipartFile lensColorImage){
         System.out.println(lensColor);
-        return lensColorService.save(lensColor);
+        return lensColorService.save(lensColor, lensColorImage);
     }
 
     @PutMapping("/{id}/update")
-    public LensColor updateColor(@PathVariable("id") long id, @RequestBody LensColor lensColor) {
+    public LensColor updateColor(@PathVariable("id") long id,
+                                 @RequestPart LensColor lensColor,
+                                 @RequestParam(required = false) MultipartFile lensColorImage) {
         System.out.println(lensColor);
-        return lensColorService.update(id, lensColor);
+        return lensColorService.update(id, lensColor, lensColorImage);
     }
 
     @DeleteMapping(path = {"/{id}/delete"})

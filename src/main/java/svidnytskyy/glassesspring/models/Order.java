@@ -1,11 +1,14 @@
 package svidnytskyy.glassesspring.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +20,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "orderList")
+@ToString(exclude = {"orderList", "user"})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order extends AuditModel {
@@ -25,14 +28,21 @@ public class Order extends AuditModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    //    @NotNull
     String orderNo;
 
-    //    @JsonIgnore
-//    @JsonIgnoreProperties("order")
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "order",
+            orphanRemoval = true)
     List<OrderItem> orderList = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //    @JsonBackReference
+    @Valid
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.REFRESH,
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE})
     User user;
 
     int quantityTotal;
@@ -40,8 +50,10 @@ public class Order extends AuditModel {
     int total;
     String comment;
 
-    //    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.REFRESH,
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE})
     Adress adress;
 
     public Order(String orderNo, List<OrderItem> orderList) {

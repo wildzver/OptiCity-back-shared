@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>OptiCity</title>
+	<style>
+		#header, #footer {
+			width: 100%;
+			height: 60px;
+			background-color: rgba(0, 44, 64, .9);
+			display: flex;
+			color: white;
+		}
+
+		.logo {
+			height: 40px;
+			margin: auto;
+		}
+
+		.body {
+			color: #002C40;
+
+			margin-left: auto;
+			margin-right: auto;
+			width: 100%;
+			max-width: 800px;
+		}
+
+		table {
+			width: 100%;
+			min-width: 400px;
+			max-width: 800px;
+			margin-bottom: 16px;
+		}
+
+		table, th, td {
+			border-bottom: 1px solid rgba(0, 44, 64, .9);
+			border-collapse: collapse;
+			text-align: left;
+		}
+
+		th, td, p, a {
+			font-size: 14px;
+		}
+
+		th, td {
+			padding: 5px;
+		}
+
+		td img {
+			max-width: 100px;
+		}
+
+		p {
+			margin: 0 0 8px 0;
+		}
+
+		#footer a {
+			margin: auto;
+			color: white;
+			text-decoration: none
+		}
+	</style>
+</head>
+<body>
+<div id="header" style="margin-bottom: 24px">
+	<a href="#" style="width: 50px; height: 50px; margin: auto; display: flex">
+		<img th:src="'cid:logo'" class="logo">
+	</a>
+</div>
+
+<div class="body">
+	<p>Вітаємо!</p>
+	<p>Дякуємо, що обрали OptiCity!</p>
+	<p th:text="'Номер Вашого замовлення - ' + ${orederNo}" style="font-style: italic"></p>
+	<table class="order-list">
+		<tr>
+			<td></td>
+			<td>Назва</td>
+			<td>Сума</td>
+		</tr>
+		<tr th:each="orderItem: ${orderlist}">
+			<td><img th:src="'cid:' + ${orderItem.getProduct().getProductNumber()}" class="max-width: 100px" alt=""></td>
+			<td>
+				<p th:text="${orderItem.getProduct().getProductDetails().getCategory().uaName}"
+				   style="font-weight: bold"></p>
+				<p th:text="'арт. ' + ${orderItem.getProduct().getProductNumber()}" style="font-style: italic"></p><br>
+				<p th:text="${orderItem.getQuantity()} + ' шт.'"></p>
+			</td>
+			<td th:text="${orderItem.subTotal} + ' грн'"></td>
+		</tr>
+		<tr style="background-color: rgba(0, 44, 64, .9); color: white">
+			<td></td>
+			<td th:text="'Разом до оплати:'"></td>
+			<td th:text="${total} + ' грн'"></td>
+		</tr>
+	</table>
+
+	<p style="font-style: italic">Дані замовлення:</p>
+	<table class="order-info">
+		<tr>
+			<td>Отримувач:</td>
+			<td th:text="${clientName}"></td>
+		</tr>
+		<tr>
+			<td>Телефон:</td>
+			<td th:text="${clientPhone}"></td>
+		</tr>
+		<tr>
+			<td>Адреса доставки:</td>
+			<td th:text="${deliveryMethod} == 'NOVA_POSHTA' ? 'Нова Пошта, ' + ${adress.settlement} + ', від. № ' + ${adress.branch} : 'Самовивіз'"></td>
+		</tr>
+	</table>
+	<br>
+	<p style="font-style: italic">Маєте запитання? Пишіть нам у відповідь на цей лист або телефонуте:</p>
+	<a style="font-style: italic" href="tel:+380975583332">+38(097)558-333-2</a>
+</div>
+
+<div id="footer" style="margin-top: 24px">
+	<a href="#" th:text="'каталог'"></a>
+	<a href="#" style="width: 50px; height: 50px; display: flex">
+		<img th:src="'cid:logo'" class="logo">
+	</a>
+	<a href="#" th:text="'контакти'"></a>
+</div>
+
+</body>
+</html>

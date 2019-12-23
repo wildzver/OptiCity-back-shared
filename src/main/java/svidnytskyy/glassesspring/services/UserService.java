@@ -63,8 +63,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("FOUND!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(userDAO.getOneByEmail(email));
         return userDAO.getOneByEmail(email);
 
     }

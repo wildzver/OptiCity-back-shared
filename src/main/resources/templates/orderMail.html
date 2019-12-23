@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style type="text/css">
+		.myclass {
+			color: red;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+	<!--<link rel="stylesheet" th:href="'cid:mycss'" /></head>-->
+</head>
+<body>
+
+<!--<p th:text="${clientName}">${clientName}</p>-->
+
+<p class="myclass" style="font-style: italic" th:text="'Замовлення № ' + ${orederNo}"></p>
+<p class="myclass2" th:text="${clientName}"></p>
+<p th:text="${clientPhone}"></p>
+<p th:if="${deliveryMethod} == 'NOVA_POSHTA'" th:text="'Нова Пошта, від. № ' + ${branch}"></p>
+<p th:if="${deliveryMethod} == 'FROM_STORE'" th:text="'Забере сам'"></p>
+
+<table>
+	<tr th:each="order : ${orderlist}">
+		<th th:text="${order.product.productNumber}"></th>
+		<th th:text="${order.quantity} + ' шт.'"></th>
+		<th th:text="${order.subTotal} + ' грн'"></th>
+	</tr>
+	<tr>
+		<td>Разом:</td>
+		<td th:text="${quantityTotal} + 'шт.'"></td>
+		<td th:text="${total} + 'грн'"></td>
+	</tr>
+</table>
+
+
+
+<a th:href="@{'http://localhost:8080/orders/sendorder/' + ${orederNo}}">
+	<button type="button">Підтвердити замовлення</button>
+</a>
+<!--<img src="cid:myfile" alt="">-->
+<form th:action="@{'http://localhost:8080/orders/sendorder/'}" th:method="GET">
+	<input type="text" name="id" th:value="${orederNo}">
+	<button type="submit">Підтвердити</button>
+</form>
+<button onclick="location.href" type="submit">Підтвердити2</button>
+<button type="button" id="btn">Підтвердити</button>
+<button type="button" id="btnsend">PATH VARIABLE</button>
+
+<script>
+    $('#btnsend').click(function (e) {
+        // e.preventDefault();
+        let ids = 10;
+
+        $.ajax({
+			url: 'api/orders/sendorder/' + ids,
+			type: 'get'
+            // success: function (res) {
+            //     console.log(res);
+            // },
+            // error: function (err) {
+            //     console.log(err);
+            // }
+		})
+
+    });
+
+    $('#btn').click(function (e) {
+        e.preventDefault();
+        // $('.target').empty();
+        // var $name = $('#name').val(); //jQuery
+        // document.getElementById("name").value;
+        // var $email = $('#email').val(); //jQuery
+        // console.log($name, $email);
+        // let contact = {name: $name, email: $email}
+        let data = {id: "10"};
+        // let ids = 50;
+        $.ajax({
+            url: 'api/orders/sendOrderMailClient',
+            type: 'POST',
+            contentType: 'application/json',
+
+            data: JSON.stringify(data), //ми будемо передавати певну інформацію (body) у форматі JSON, котра буде братися з contact
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+            // success: function (results) {
+            //     console.log(results);
+            //     for (const contact of results) {
+            //         let data =z `${contact.id} ${contact.name} ${contact.email}`;
+            //         let $div = $('<div/>', {class: 'xxx', text: data});
+            //         $('.target').append($div)
+            //     }
+
+        })
+    });
+
+</script>
+
+</body>
+</html>

@@ -2,12 +2,13 @@ package svidnytskyy.glassesspring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import svidnytskyy.glassesspring.models.FrameColor;
 import svidnytskyy.glassesspring.services.FrameColorService;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/products/frame-colors"})
+@RequestMapping({"/api/products/frame-colors"})
 public class FrameColorController {
     @Autowired
     FrameColorService frameColorService;
@@ -24,15 +25,18 @@ public class FrameColorController {
     }
 
     @PostMapping("/add")
-    public FrameColor addColor(@RequestBody FrameColor frameColor){
+    public FrameColor addColor(@RequestPart FrameColor frameColor,
+                               @RequestParam MultipartFile frameColorImage){
         System.out.println(frameColor);
-        return frameColorService.save(frameColor);
+        return frameColorService.save(frameColor, frameColorImage);
     }
 
     @PutMapping("/{id}/update")
-    public FrameColor updateColor(@PathVariable("id") long id, @RequestBody FrameColor frameColor) {
+    public FrameColor updateColor(@PathVariable("id") long id,
+                                  @RequestPart FrameColor frameColor,
+                                  @RequestParam(required = false) MultipartFile frameColorImage) {
         System.out.println(frameColor);
-        return frameColorService.update(id, frameColor);
+        return frameColorService.update(id, frameColor, frameColorImage);
     }
 
     @DeleteMapping(path = {"/{id}/delete"})

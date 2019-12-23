@@ -23,7 +23,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/users"})
+@RequestMapping({"/api/users"})
 public class UserController {
     @Autowired
     UserService userService;
@@ -37,10 +37,6 @@ public class UserController {
 //        System.out.println(user.getPhoneList().stream().findFirst());
         System.out.println("USER!!!!!!!!!");
 
-        File file = new File("public/upload-dir/5d1dc3e46d1bd680503848.jpg");
-        FileInputStream input = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", input);
-        emailsService.sendEmail(user.getEmail(), multipartFile);
 
         return userService.save(user);
     }

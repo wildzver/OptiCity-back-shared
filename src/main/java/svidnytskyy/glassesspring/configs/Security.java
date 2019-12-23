@@ -57,18 +57,19 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
 //                .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/addUser").permitAll()
-                .antMatchers(HttpMethod.POST, "/orders/addOrder").permitAll()
-                .antMatchers("/products/**").permitAll()
+                .antMatchers("/api").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/addUser").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/orders/**").permitAll()
+                .antMatchers("/api/products/**").permitAll()
 //                .antMatchers("/products/lens-colors").permitAll()
 //                .antMatchers("/products/frame-colors").permitAll()
 //                .antMatchers("/products/categories").permitAll()
-                .antMatchers("/product-image/**").permitAll()
-                .antMatchers("/files/**").permitAll()
+                .antMatchers("/api/product-image/**").permitAll()
+                .antMatchers("/api/files/**").permitAll()
 //                .anyRequest().authenticated()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/get").hasRole("USER")
+                .antMatchers("/api/admin").hasRole("ADMIN")
+                .antMatchers("/api/get").hasRole("USER")
                 .and()
 //                .formLogin()
 //                .loginPage("/login").permitAll()
@@ -82,7 +83,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 // We filter the api/login requests
                 // And filter other requests to check the presence of JWT in header
                 .addFilterBefore(new RequestProcessingJWTFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new LoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new LoginFilter("/api/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 
 
     }

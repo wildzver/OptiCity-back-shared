@@ -1,63 +1,86 @@
 package svidnytskyy.glassesspring.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = "order")
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "order")
+@ToString(exclude = {"order"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User extends AuditModel implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+
+    @NotEmpty(message = "required")
+    @Size(min = 2, max = 30, message = "size")
+    @Pattern(regexp = "^([A-Za-zА-Яа-яІіЇїЄє]+(\\'|\\-|\\.?\\s))*[A-Za-zА-Яа-яІіЇїЄє]+$", message = "pattern")
     String firstName;
+
+    @NotEmpty(message = "required")
+    @Size(min = 2, max = 30, message = "size")
+    @Pattern(regexp = "^([A-Za-zА-Яа-яІіЇїЄє]+(\\'|\\-|\\.?\\s))*[A-Za-zА-Яа-яІіЇїЄє]+$", message = "pattern")
     String lastName;
+
+    @NotEmpty(message = "required")
+    @Email(message = "email")
     String email;
+
+    @NotEmpty(message = "required")
+    @Pattern(regexp = "((?:\\+|00)[17](?: |\\-)?|(?:\\+|00)[1-9]\\d{0,2}(?: |\\-)?|(?:\\+|00)1\\-\\d{3}(?: |\\-)?)?(0\\d|\\([0-9]{3}\\)|[1-9]{0,3})(?:((?: |\\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: ?|\\-?)[0-9]{3}(?: ?|\\-?)[0-9]{7})|([0-9]{7}))", message = "pattern")
     String phone;
     String password;
     String source;
     String role = CustomRole.USER.name();
-    //    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    //        @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "user",
+            orphanRemoval = true)
 //    @JoinColumn(name = "orderlist")
-            List<Order> order = new ArrayList<>();
+            List<Order> orders = new ArrayList<>();
+
+    public void addOrder(Order order) {
+        orders.add(order);
+        order.setUser(this);
+
+    }
 //    @Column(name = "TimeStamp")
 //    Date currentTime = new Date();
 
 
-    public User(String firstName, String lastName, String phone, List<Order> order) {
+    public User(String firstName,
+                String lastName,
+                String phone,
+                List<Order> orders) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
-        this.order = order;
+        this.orders = orders;
     }
 
-    public User(String firstName, String lastName, String email, String phone, List<Order> order) {
+    public User(String firstName, String lastName, String email, String phone, List<Order> orders) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
-        this.order = order;
+        this.orders = orders;
     }
 
     public User(String firstName, String lastName, String phone) {

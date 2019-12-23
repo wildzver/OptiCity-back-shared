@@ -4,13 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import svidnytskyy.glassesspring.services.ImageService;
-import svidnytskyy.glassesspring.services.StorageService;
 
 import javax.annotation.Resource;
 
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableJpaRepositories
 public class GlassesSpringApplication implements CommandLineRunner {
 	@Resource
 	ImageService imageService;

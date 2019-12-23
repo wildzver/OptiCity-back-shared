@@ -3,6 +3,8 @@ package svidnytskyy.glassesspring.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -12,20 +14,26 @@ import javax.validation.constraints.Size;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "categories")
-@ToString(exclude = {"products"})
+@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-
-    @Size(max = 30)
+    //    @Analyzer(definition = "customanalyzer")
+//    @Field
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     String name;
 
-    @Size(max = 30)
+    //    @Analyzer(definition = "customanalyzer")
+//    @Field
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     String uaName;
+
+    String imageName;
 
 //    @ManyToMany(fetch = FetchType.LAZY,
 //    cascade = {
