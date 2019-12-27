@@ -20,7 +20,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Sex {
+public class Sex extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
@@ -30,6 +30,5 @@ public class Sex {
     String name;
 
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO, analyzer = @Analyzer(definition = "customanalyzer"))
-//    @Field(name = "uaName_Filter", index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "filterAnalyzer"))
     String uaName;
 }

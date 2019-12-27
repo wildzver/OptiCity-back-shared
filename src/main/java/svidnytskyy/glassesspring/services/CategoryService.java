@@ -47,7 +47,7 @@ public class CategoryService {
                 throw new FileStorageException("Filename contains invalid path sequence " + imageName);
             }
 
-            setCategoryImageName(category, categoryImage); // return category with new imageName
+            setCategoryImageName(category, categoryImage); // returns category with new imageName
 
             File currentFile = findCategoryImgInStore(category);
             if (currentFile.exists()) {
@@ -87,7 +87,6 @@ public class CategoryService {
     }
 
     public Category getCategoryByName(String categoryName) {
-//        return categoryDAO.findFirstByName(name);
         Optional<Category> optionalCategory = Optional.ofNullable(categoryDAO.findFirstByName(categoryName)); // returns java8 optional
         if (optionalCategory.isPresent()) {
             return optionalCategory.get();

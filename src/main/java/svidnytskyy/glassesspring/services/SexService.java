@@ -2,9 +2,7 @@ package svidnytskyy.glassesspring.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import svidnytskyy.glassesspring.dao.OriginDAO;
 import svidnytskyy.glassesspring.dao.SexDAO;
-import svidnytskyy.glassesspring.models.Origin;
 import svidnytskyy.glassesspring.models.Sex;
 
 import java.util.List;

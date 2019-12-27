@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import svidnytskyy.glassesspring.models.LensMaterial;
 import svidnytskyy.glassesspring.services.LensMaterialService;
-
 import java.util.List;
 
 @RestController
@@ -15,7 +14,6 @@ public class LensMaterialController {
 
     @GetMapping
     public List<LensMaterial> findAll() {
-        System.out.println(lensMaterialService.findAll());
         return lensMaterialService.findAll();
     }
 
@@ -26,14 +24,12 @@ public class LensMaterialController {
 
     @PostMapping("/add")
     public LensMaterial addLensMaterial(@RequestBody LensMaterial lensMaterial) {
-        System.out.println(lensMaterial);
         return lensMaterialService.save(lensMaterial);
     }
 
     @PutMapping("/{id}/update")
     public LensMaterial updateLensMaterial(@PathVariable("id") long id,
                                            @RequestBody LensMaterial lensMaterial) {
-        System.out.println(lensMaterial);
         return lensMaterialService.update(id, lensMaterial);
     }
 

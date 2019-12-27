@@ -6,12 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,21 +17,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.Arrays;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
-//@EnableWebSecurity
 public class Security extends WebSecurityConfigurerAdapter {
-
-//        @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-////            auth.authenticationProvider(daoAuthenticationProvider());
-//        auth.inMemoryAuthentication().withUser("tarassvidnytskyy@gmail.com").password(passwordEncoder().encode("Qwerty12")).roles("ADMIN");
-//        auth.inMemoryAuthentication().withUser("mokasyn@mail.ru").password(passwordEncoder().encode("Qwerty12")).roles("USER");
-//    }
-
 
     @Autowired
     @Qualifier("userService")
@@ -56,15 +43,11 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-//                .antMatchers("/").permitAll()
                 .antMatchers("/api").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/addUser").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/orders/**").permitAll()
                 .antMatchers("/api/products/**").permitAll()
-//                .antMatchers("/products/lens-colors").permitAll()
-//                .antMatchers("/products/frame-colors").permitAll()
-//                .antMatchers("/products/categories").permitAll()
                 .antMatchers("/api/product-image/**").permitAll()
                 .antMatchers("/api/files/**").permitAll()
 //                .anyRequest().authenticated()
@@ -84,8 +67,6 @@ public class Security extends WebSecurityConfigurerAdapter {
                 // And filter other requests to check the presence of JWT in header
                 .addFilterBefore(new RequestProcessingJWTFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new LoginFilter("/api/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class);
-
-
     }
 
     @Bean
@@ -112,5 +93,4 @@ public class Security extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

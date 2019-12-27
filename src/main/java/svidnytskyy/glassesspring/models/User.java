@@ -1,12 +1,10 @@
 package svidnytskyy.glassesspring.models;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
@@ -48,12 +46,10 @@ public class User extends AuditModel implements UserDetails {
     String password;
     String source;
     String role = CustomRole.USER.name();
-    //        @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "user",
             orphanRemoval = true)
-//    @JoinColumn(name = "orderlist")
             List<Order> orders = new ArrayList<>();
 
     public void addOrder(Order order) {
@@ -61,9 +57,6 @@ public class User extends AuditModel implements UserDetails {
         order.setUser(this);
 
     }
-//    @Column(name = "TimeStamp")
-//    Date currentTime = new Date();
-
 
     public User(String firstName,
                 String lastName,
@@ -104,7 +97,6 @@ public class User extends AuditModel implements UserDetails {
         this.password = password;
         this.source = source;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

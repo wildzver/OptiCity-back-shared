@@ -3,9 +3,7 @@ package svidnytskyy.glassesspring.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import svidnytskyy.glassesspring.dao.DiopterDAO;
-import svidnytskyy.glassesspring.dao.LensColorDAO;
 import svidnytskyy.glassesspring.models.Diopter;
-import svidnytskyy.glassesspring.models.LensColor;
 
 import java.util.List;
 

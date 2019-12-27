@@ -15,7 +15,6 @@ public class FrameColorController {
 
     @GetMapping
     public List<FrameColor> findAll(){
-        System.out.println(frameColorService.findAll());
         return frameColorService.findAll();
     }
 
@@ -27,7 +26,6 @@ public class FrameColorController {
     @PostMapping("/add")
     public FrameColor addColor(@RequestPart FrameColor frameColor,
                                @RequestParam MultipartFile frameColorImage){
-        System.out.println(frameColor);
         return frameColorService.save(frameColor, frameColorImage);
     }
 
@@ -35,7 +33,6 @@ public class FrameColorController {
     public FrameColor updateColor(@PathVariable("id") long id,
                                   @RequestPart FrameColor frameColor,
                                   @RequestParam(required = false) MultipartFile frameColorImage) {
-        System.out.println(frameColor);
         return frameColorService.update(id, frameColor, frameColorImage);
     }
 
@@ -43,6 +40,4 @@ public class FrameColorController {
     public FrameColor delete(@PathVariable("id") long id) {
         return frameColorService.delete(id);
     }
-
-
 }

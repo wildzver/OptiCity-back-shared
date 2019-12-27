@@ -76,7 +76,6 @@ public class OrderService {
                 order.setUser(userDAO.getOneByEmail("tarassvidnytskyy@gmail.com"));
             }
 
-//            if (userDAO.existsUserByEmailAndPhone(order.getUser().getEmail(), order.getUser().getPhone())) {
             List<User> currentUsers = userDAO.getUsersByFirstNameAndLastNameAndEmailAndPhone(
                     order.getUser().getFirstName(),
                     order.getUser().getLastName(),
@@ -84,59 +83,13 @@ public class OrderService {
                     order.getUser().getPhone());
 
             if (!currentUsers.isEmpty()) order.setUser(currentUsers.get(0));
-//                order.getUser().setId(userDAO.getUserByEmailAndPhone(order.getUser().getEmail(), order.getUser().getPhone()).getId());
-//                (userDAO.getUserByEmailAndPhone(order.getUser().getEmail(), order.getUser().getPhone()).getId())
             List<Adress> currentAdresses = adressDAO.getAdressesBySettlementAndDeliveryMethodAndBranch(order.getAdress().getSettlement(), order.getAdress().getDeliveryMethod(), order.getAdress().getBranch());
-            System.out.println("MY CURRENT ADRESS" + currentAdresses);
             if (!currentAdresses.isEmpty()) order.setAdress(currentAdresses.get(0));
             Order orderFlush = orderDAO.saveAndFlush(order);
-            System.out.println("ORDER FLUSH" + orderFlush);
             order.setOrderNo(String.valueOf(orderFlush.getId()));
-
-
-            Order currentOrder = getByUserPhoneAndCreatedAt(order.getUser().getPhone(),
-                    (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(order.getCreatedAt()))));
-            Date currentOrderDate = new SimpleDateFormat("yyyy-MM-dd").parse(new SimpleDateFormat("yyyy-MM-dd").format(order.getCreatedAt()));
-
-            System.out.println("CURRENT ORDER!" + currentOrder);
-            System.out.println("CURRENT ORDER!" + order.getUser().getPhone());
-            System.out.println("CURRENT ORDER!" + order.getCreatedAt());
-            System.err.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(shiftTimeZone(order.getCreatedAt(), TimeZone.getTimeZone("EST"), TimeZone.getTimeZone("UTC"))));
-            System.err.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(order.getCreatedAt()));
-
-//            order.setOrderNo("asd");
-
-
             orderDAO.save(order);
-
-
         }
         emailsService.sendEmail(order);
         return order;
     }
-
-
-    public Order getByUserPhoneAndCreatedAt(String phone, Date createdAt) {
-        return orderDAO.getByUserPhoneAndCreatedAt(phone, createdAt);
-    }
-
-//    public Order getOrderByCreatedAt(Date createdAt) {
-//        return orderDAO.getByCreatedAt(createdAt);
-//    }
-
-    private Date shiftTimeZone(Date date, TimeZone sourceTimeZone, TimeZone targetTimeZone) {
-        Calendar sourceCalendar = Calendar.getInstance();
-        sourceCalendar.setTime(date);
-        sourceCalendar.setTimeZone(sourceTimeZone);
-
-        Calendar targetCalendar = Calendar.getInstance();
-        for (int field : new int[]{Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND}) {
-            targetCalendar.set(field, sourceCalendar.get(field));
-        }
-        targetCalendar.setTimeZone(targetTimeZone);
-
-        return targetCalendar.getTime();
-    }
-
-
 }

@@ -19,33 +19,18 @@ import javax.validation.constraints.Size;
 @Table(name = "categories")
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Category {
+public class Category extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-    //    @Analyzer(definition = "customanalyzer")
-//    @Field
+
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     String name;
 
-    //    @Analyzer(definition = "customanalyzer")
-//    @Field
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     String uaName;
 
     String imageName;
-
-//    @ManyToMany(fetch = FetchType.LAZY,
-//    cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-
-
-//    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "category")
-//    List<Product> products;
-
-
 }
 
 

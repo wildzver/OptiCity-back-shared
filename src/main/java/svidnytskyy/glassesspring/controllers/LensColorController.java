@@ -16,7 +16,6 @@ public class LensColorController {
 
     @GetMapping
     public List<LensColor> findAll(){
-        System.out.println(lensColorService.findAll());
         return lensColorService.findAll();
     }
 
@@ -28,7 +27,6 @@ public class LensColorController {
     @PostMapping("/add")
     public LensColor addColor(@RequestPart LensColor lensColor,
                               @RequestParam MultipartFile lensColorImage){
-        System.out.println(lensColor);
         return lensColorService.save(lensColor, lensColorImage);
     }
 
@@ -36,7 +34,6 @@ public class LensColorController {
     public LensColor updateColor(@PathVariable("id") long id,
                                  @RequestPart LensColor lensColor,
                                  @RequestParam(required = false) MultipartFile lensColorImage) {
-        System.out.println(lensColor);
         return lensColorService.update(id, lensColor, lensColorImage);
     }
 

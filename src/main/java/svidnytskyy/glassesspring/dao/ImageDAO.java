@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface ImageDAO extends JpaRepository<Image, Long> {
 
-    Image getByImageName(String imageName);
-
     @Query("select p.images from Product p where p.id =:id")
     List<Image> getProductImages(@Param("id") long id);
 

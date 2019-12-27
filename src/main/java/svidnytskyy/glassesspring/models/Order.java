@@ -1,16 +1,10 @@
 package svidnytskyy.glassesspring.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,13 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(exclude = {"orderList", "user"})
 @FieldDefaults(level = AccessLevel.PRIVATE)
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    //    @NotNull
     String orderNo;
 
     @OneToMany(fetch = FetchType.LAZY,
@@ -37,7 +29,6 @@ public class Order extends AuditModel {
             orphanRemoval = true)
     List<OrderItem> orderList = new ArrayList<>();
 
-    //    @JsonBackReference
     @Valid
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.REFRESH,
@@ -48,6 +39,7 @@ public class Order extends AuditModel {
     int quantityTotal;
 
     int total;
+
     String comment;
 
     @ManyToOne(fetch = FetchType.LAZY,
@@ -74,5 +66,4 @@ public class Order extends AuditModel {
         this.total = total;
         this.adress = adress;
     }
-
 }

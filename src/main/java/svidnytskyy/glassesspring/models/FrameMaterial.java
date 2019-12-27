@@ -17,7 +17,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class FrameMaterial {
+public class FrameMaterial extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
@@ -26,7 +26,6 @@ public class FrameMaterial {
     @Field(name = "name_Filter", index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "filterAnalyzer"))
     String name;
 
-    //    @Field(name = "uaName_Filter", index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "filterAnalyzer"))
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO, analyzer = @Analyzer(definition = "customanalyzer"))
     String uaName;
 }

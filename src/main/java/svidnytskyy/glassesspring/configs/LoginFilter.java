@@ -1,5 +1,4 @@
 package svidnytskyy.glassesspring.configs;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,16 +9,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import svidnytskyy.glassesspring.models.AccountCredentials;
-
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
-
 
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -27,7 +22,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
     }
-
 
 //    During the authentication attempt,
 // which is dealt by the attemptAuthentication method,
@@ -60,8 +54,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
                         Collections.emptyList()
                 )
         );
-
-
     }
 
     @Override
@@ -83,8 +75,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
                 .compact();
         //and add it to header
         res.addHeader("Authorization", "Bearer " + jwtoken);
-        System.out.println("AUTH WORK!!!" + auth.getAuthorities().iterator().next());
-
     }
 }
 

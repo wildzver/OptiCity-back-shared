@@ -18,7 +18,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderItem {
+public class OrderItem extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -33,16 +33,5 @@ public class OrderItem {
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Order order;
-
-//    public OrderItem(int quantity, int subTotal) {
-//        this.quantity = quantity;
-//        this.subTotal = subTotal;
-//    }
-
-//    public OrderItem(Product product, int quantity, int subTotal) {
-//        this.product = product;
-//        this.quantity = quantity;
-//        this.subTotal = subTotal;
-//    }
 }
 

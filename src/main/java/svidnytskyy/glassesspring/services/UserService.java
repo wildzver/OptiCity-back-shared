@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import svidnytskyy.glassesspring.dao.UserDAO;
-import svidnytskyy.glassesspring.models.Product;
 import svidnytskyy.glassesspring.models.User;
 
 import java.util.List;
@@ -64,6 +63,5 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userDAO.getOneByEmail(email);
-
     }
 }

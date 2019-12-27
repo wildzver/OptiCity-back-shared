@@ -2,18 +2,12 @@ package svidnytskyy.glassesspring.utils;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import svidnytskyy.glassesspring.dao.CategoryDAO;
-import svidnytskyy.glassesspring.models.Category;
 import svidnytskyy.glassesspring.models.Product;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -72,65 +66,4 @@ public class ExcelUtils {
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
-
-//    public static List parseExcelFile(InputStream is) {
-//        try {
-//            Workbook workbook = new XSSFWorkbook(is);
-//
-//            Sheet sheet = workbook.getSheet("products");
-//            Iterator rows = sheet.iterator();
-//
-//            List<Product> products = new ArrayList<>();
-//
-//            int rowNumber = 0;
-//            while (rows.hasNext()) {
-//                Row currentRow = (Row) rows.next();
-//
-//                // skip header
-//                if(rowNumber == 0) {
-//                    rowNumber++;
-//                    continue;
-//                }
-//
-//                Iterator cellsInRow = currentRow.iterator();
-//
-//                Product product = new Product();
-//
-//                int cellIndex = 0;
-//                while (cellsInRow.hasNext()) {
-//                    Cell currentCell = (Cell) cellsInRow.next();
-//
-//                    if(cellIndex==0) { // id
-//                        product.setId((long) currentCell.getNumericCellValue());
-//                        System.out.println("PRODUCT ID!!!" + product.getId());
-//                    } else if(cellIndex==1) { // product_details_id
-//                        System.out.println("PRODUCT PRODUCTDETAILS!!!" + (long)currentCell.getNumericCellValue());
-////                        product.getProductDetails().setId((long) currentCell.getNumericCellValue());
-//                    } else if(cellIndex==2) { // category_id
-//                        System.out.println("asd" + (long)currentCell.getNumericCellValue());
-//                        Category currentCategory = categoryDAO.getCategoryById((long)currentCell.getNumericCellValue());
-//                        System.out.println("CURRENT CATEGORY!" + currentCategory);
-//                        product.setCategory(new Category((long)currentCell.getNumericCellValue())));
-//                        System.out.println("PRODUCT CATEGORY!!!" + product.getCategory());
-//
-//                    } else if(cellIndex==3) { // lens_color_id
-//                        product.getLensColor().setId((long) currentCell.getNumericCellValue());
-//                    } else if(cellIndex==4) { // frame_color_id
-//                        product.getFrameColor().setId((long) currentCell.getNumericCellValue());
-//                    }
-//                    System.out.println("PRODUCT!" + product);
-//                    cellIndex++;
-//                }
-//
-//                products.add(product);
-//            }
-//
-//            // Close WorkBook
-//            workbook.close();
-//
-//            return products;
-//        } catch (IOException e) {
-//            throw new RuntimeException("FAIL! -> message = " + e.getMessage());
-//        }
-//    }
 }

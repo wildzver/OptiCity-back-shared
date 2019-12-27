@@ -16,7 +16,6 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-import svidnytskyy.glassesspring.models.Image;
 import svidnytskyy.glassesspring.models.Order;
 import svidnytskyy.glassesspring.models.OrderItem;
 
@@ -26,12 +25,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @PropertySource("classpath:application.properties")
 @Service
@@ -81,7 +75,6 @@ public class EmailsService {
         return templateResolver;
     }
 
-
     public void sendEmail(Order order) throws MessagingException, IOException {
 
         Context ctx = new Context();
@@ -99,16 +92,16 @@ public class EmailsService {
 
         sendEmailAdmin(order, ctx);
         sendEmailClient(order, ctx);
-
-
     }
 
     private void sendEmailAdmin(Order order, Context ctx) throws MessagingException {
         MimeMessage mimeMessageAdmin = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessageAdmin, true);
         try {
+            System.out.println("USERNAME" + env.getProperty("spring.mail.username"));
+            System.out.println("PASSWORD" + env.getProperty("spring.mail.password"));
             mimeMessageAdmin.setFrom(new InternetAddress(env.getProperty("spring.mail.username")));
-            helper.setTo(env.getProperty("spring.mail.username"));
+            helper.setTo("tarassvidnytskyy@gmail.com");
             helper.setSubject("Замовлення № " + order.getOrderNo());
 
             String htmlContent = this.htmlTemplateEngine().process("orderMail.html", ctx);
@@ -127,16 +120,12 @@ public class EmailsService {
         try {
             mimeMessageClient.setFrom(new InternetAddress(env.getProperty("spring.mail.username")));
             helper.setTo(order.getUser().getEmail());
-            helper.setSubject("OptiCity. Замовлення №"+ order.getOrderNo());
-
-//            FileSystemResource file = new FileSystemResource(new File("public/upload-dir/welcome-image.jpg"));
-//            helper.addAttachment(file.getFilename(), file);
-
+            helper.setSubject("OptiCity. Замовлення №" + order.getOrderNo());
 
             String htmlContent = this.htmlTemplateEngine().process("orderMailClient.html", ctx);
             helper.setText(htmlContent, true);
 
-             order.getOrderList().stream().map(OrderItem::getProduct).peek(product -> {
+            order.getOrderList().stream().map(OrderItem::getProduct).peek(product -> {
                 String imageName = product
                         .getImages()
                         .stream()
@@ -144,26 +133,20 @@ public class EmailsService {
                         .findFirst()
                         .orElseGet(() -> product.getImages().get(0))
                         .getImageName();
-                 try {
-//                     FileSystemResource logoImage = new FileSystemResource(new File("public/upload-dir/welcome-image.jpg"));
-//                     helper.addInline("logo", logoImage);
-                     FileSystemResource logoImage2 = new FileSystemResource(new File("public/upload-dir/logo-white.png"));
-                     helper.addInline("logo", logoImage2);
-                     FileSystemResource productImage = new FileSystemResource(new File("public/products-imgs/" + imageName));
-                     helper.addInline(product.getProductNumber(), productImage);
-                 } catch (MessagingException e) {
-                     e.printStackTrace();
-                 }
+                try {
+                    FileSystemResource logoImage2 = new FileSystemResource(new File("public/upload-dir/logo-white.png"));
+                    helper.addInline("logo", logoImage2);
+                    FileSystemResource productImage = new FileSystemResource(new File("public/products-imgs/" + imageName));
+                    helper.addInline(product.getProductNumber(), productImage);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
             }).collect(Collectors.toList());
-
-//            FileSystemResource productImage = new FileSystemResource(new File("public/upload-dir/welcome-image.jpg"));
-//            helper.addInline("product-image" + order.getOrderList(), new File("public/upload-dir/welcome-image.jpg"));
 
         } catch (MessagingException e) {
             e.printStackTrace();
         }
         javaMailSender.send(mimeMessageClient);
-
     }
 }
 

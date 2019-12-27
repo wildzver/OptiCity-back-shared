@@ -17,12 +17,11 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Diopter {
+public class Diopter extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-//    @NumericField(forField = "value")
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO, analyzer = @Analyzer(definition = "customanalyzer"))
     @Field(name = "value_Filter", index = Index.YES, analyze = Analyze.YES, store = Store.YES, analyzer = @Analyzer(definition = "filterAnalyzer"))
     String value;

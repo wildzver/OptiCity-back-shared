@@ -2,7 +2,6 @@ package svidnytskyy.glassesspring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import svidnytskyy.glassesspring.models.LensColor;
 import svidnytskyy.glassesspring.models.Origin;
 import svidnytskyy.glassesspring.services.OriginService;
 
@@ -16,7 +15,6 @@ public class OriginController {
 
     @GetMapping
     public List<Origin> findAll() {
-        System.out.println(originService.findAll());
         return originService.findAll();
     }
 
@@ -27,13 +25,11 @@ public class OriginController {
 
     @PostMapping("/add")
     public Origin addOrigin(@RequestBody Origin origin) {
-        System.out.println(origin);
         return originService.save(origin);
     }
 
     @PutMapping("/{id}/update")
     public Origin updateOrigin(@PathVariable("id") long id, @RequestBody Origin origin) {
-        System.out.println(origin);
         return originService.update(id, origin);
     }
 
@@ -41,5 +37,4 @@ public class OriginController {
     public Origin delete(@PathVariable("id") long id) {
         return originService.delete(id);
     }
-
 }

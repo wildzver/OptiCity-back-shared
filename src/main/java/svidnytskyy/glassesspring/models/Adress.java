@@ -13,7 +13,7 @@ import javax.persistence.*;
 @ToString()
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
-public class Adress {
+public class Adress extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;

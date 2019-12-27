@@ -17,7 +17,6 @@ public class CategoryController {
 
     @GetMapping
     public List<Category> findAll(){
-        System.out.println(categoryService.findAll());
         return categoryService.findAll();
     }
 
@@ -26,18 +25,16 @@ public class CategoryController {
         return categoryService.getOne(id);
     }
 
-    @GetMapping("/as")
+    @GetMapping("/categoryByName")
     public Category getCategoryByName (
             @RequestParam String categoryName){
         Category category = categoryService.getCategoryByName(categoryName);
-        System.out.println("CATEGORY NAME<>" + category);
         return category;
     }
 
     @PostMapping("/add")
     public Category addCategory(@RequestPart Category category,
                                 @RequestParam MultipartFile categoryImage){
-        System.out.println(category);
         return categoryService.save(category, categoryImage);
     }
 
@@ -45,7 +42,6 @@ public class CategoryController {
     public Category updateCategory(@PathVariable("id") long id,
                                    @RequestPart Category category,
                                    @RequestParam(required = false) MultipartFile categoryImage) throws IOException {
-        System.out.println(category);
         return categoryService.update(id, category, categoryImage);
     }
 
@@ -53,6 +49,4 @@ public class CategoryController {
     public Category delete(@PathVariable("id") long id) {
         return categoryService.delete(id);
     }
-
-
 }

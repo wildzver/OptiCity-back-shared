@@ -1,10 +1,5 @@
 package svidnytskyy.glassesspring.repositories;
-
 import org.hibernate.search.bridge.StringBridge;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 public class ProductNumberBridge implements StringBridge {
 
     private int modelNumberPadding = 5;
@@ -12,9 +7,7 @@ public class ProductNumberBridge implements StringBridge {
     private int frameColorPadding = 2;
 
     public String objectToString(Object object) {
-        System.out.println("MY OBJECT" + object);
         String[] rawProductNumber = (object).toString().split("_");
-        System.out.println("rawProductNumber" + Arrays.toString(rawProductNumber));
         String rawModelNumber = rawProductNumber[0];
         String rawLensColor = rawProductNumber[1];
         String rawFrameColor = rawProductNumber[2];
@@ -41,8 +34,6 @@ public class ProductNumberBridge implements StringBridge {
                 .append(paddedLensColor).append(rawLensColor)
                 .append(paddedFrameColor).append(rawFrameColor)
                 .toString();
-        System.out.println("MY NEW PN" + newProductNumber);
         return newProductNumber;
-//        return "asd";
     }
 }

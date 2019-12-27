@@ -26,14 +26,12 @@ public class FrameMaterialController {
 
     @PostMapping("/add")
     public FrameMaterial addFrameMaterial(@RequestBody FrameMaterial frameMaterial) {
-        System.out.println(frameMaterial);
         return frameMaterialService.save(frameMaterial);
     }
 
     @PutMapping("/{id}/update")
     public FrameMaterial updateFrameMaterial(@PathVariable("id") long id,
-                                           @RequestBody FrameMaterial frameMaterial) {
-        System.out.println(frameMaterial);
+                                             @RequestBody FrameMaterial frameMaterial) {
         return frameMaterialService.update(id, frameMaterial);
     }
 
