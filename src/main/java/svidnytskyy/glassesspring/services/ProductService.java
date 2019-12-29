@@ -262,7 +262,7 @@ public class ProductService {
                                              List<Diopter> diopter,
                                              boolean polarization) throws InterruptedException {
         StringBuilder sexes = new StringBuilder();
-        sex.forEach(item -> sexes.append(item.getName().concat(" ")));
+        if (sexes != null) sex.forEach(item -> sexes.append(item.getName().concat(" ")));
         StringBuilder lensColors = new StringBuilder();
         if (lensColor != null) lensColor.forEach(color -> lensColors.append(color.getName().concat(" ")));
         StringBuilder frameColors = new StringBuilder();
