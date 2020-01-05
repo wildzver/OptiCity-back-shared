@@ -11,6 +11,7 @@
 	<groupId>svidnytskyy</groupId>
 	<artifactId>glasses-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 	<name>glasses-spring</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -167,7 +168,11 @@
 			<!--<artifactId>lucene-core</artifactId>-->
 			<!--<version>6.6.1</version>-->
 		<!--</dependency>-->
-
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.11.0</version>
+		</dependency>
 
 
 
@@ -175,31 +180,31 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<version>1.5.3</version>
-				<executions>
-					<execution>
-						<id>generate-docs</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>process-asciidoc</goal>
-						</goals>
-						<configuration>
-							<backend>html</backend>
-							<doctype>book</doctype>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.springframework.restdocs</groupId>
-						<artifactId>spring-restdocs-asciidoctor</artifactId>
-						<version>${spring-restdocs.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.asciidoctor</groupId>-->
+				<!--<artifactId>asciidoctor-maven-plugin</artifactId>-->
+				<!--<version>1.5.6</version>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>generate-docs</id>-->
+						<!--<phase>prepare-package</phase>-->
+						<!--<goals>-->
+							<!--<goal>process-asciidoc</goal>-->
+						<!--</goals>-->
+						<!--<configuration>-->
+							<!--<backend>html</backend>-->
+							<!--<doctype>book</doctype>-->
+						<!--</configuration>-->
+					<!--</execution>-->
+				<!--</executions>-->
+				<!--<dependencies>-->
+					<!--<dependency>-->
+						<!--<groupId>org.springframework.restdocs</groupId>-->
+						<!--<artifactId>spring-restdocs-asciidoctor</artifactId>-->
+						<!--<version>${spring-restdocs.version}</version>-->
+					<!--</dependency>-->
+				<!--</dependencies>-->
+			<!--</plugin>-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

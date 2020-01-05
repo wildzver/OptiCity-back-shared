@@ -9,7 +9,7 @@ public class StartupController {
     @GetMapping("")
     public String home() {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!controller!");
-        return "forward:/index.html";
-//        return "orderMailClient.html";
+//        return "forward:/index.html";
+        return "orderMailClient.html";
     }
 }
