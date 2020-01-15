@@ -51,7 +51,7 @@ public class WebConfig implements WebMvcConfigurer {
                 + "OptiCity" + File.separator
                 + "static" + File.separator;
 
-        System.out.println("My URI PUBLIC" + Paths.get("public").toUri());
+        System.out.println("My URI PUBLIC" + pathToPublicResourceFolder);
         System.out.println("My URI STATIC" + pathToStaticResourceFolder);
 
 //        registry.addResourceHandler("/*.html", "/*.css", "/*.js", "/*.svg", "/assets/images/**")
