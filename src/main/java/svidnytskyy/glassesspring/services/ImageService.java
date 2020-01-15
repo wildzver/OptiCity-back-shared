@@ -23,7 +23,12 @@ public class ImageService {
     @Autowired
     private ImageDAO imageDAO;
 
-    private final Path productsImagesLocation = Paths.get("public/products-imgs");
+//    private final Path productsImagesLocation = Paths.get("public/products-imgs");
+    private final Path productsImagesLocation = Paths.get(System.getProperty("user.home") + File.separator
+        + "ubuntu" + File.separator
+        + "OptiCity" + File.separator
+        + "public" + File.separator
+        + "products-imgs" + File.separator);
 
     public Image storeProductsImages(Product product,
                                      MultipartFile file,

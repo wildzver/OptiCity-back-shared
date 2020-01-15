@@ -25,7 +25,13 @@ public class FrameColorService {
         this.frameColorDAO = frameColorDAO;
     }
 
-    private final Path frameColorImagesLocation = Paths.get("public/frame-colors-imgs");
+    //    private final Path frameColorImagesLocation = Paths.get("public/frame-colors-imgs");
+    private final Path frameColorImagesLocation = Paths.get(
+            System.getProperty("user.home") + File.separator
+                    + "ubuntu" + File.separator
+                    + "OptiCity" + File.separator
+                    + "public" + File.separator
+                    + "frame-colors-imgs" + File.separator);
 
     public FrameColor save(FrameColor frameColor,
                            MultipartFile frameColorImage) {
@@ -98,7 +104,7 @@ public class FrameColorService {
             if (newImage == null) {
                 String newImageName = updatableFrameColor.getImageName().replace(updatableFrameColor.getName(), newName);
                 File currentImgFile = findFrameColorImgInStore(updatableFrameColor);
-                if(currentImgFile.exists()) {
+                if (currentImgFile.exists()) {
                     currentImgFile.renameTo(new File(frameColorImagesLocation + "/" + newImageName));
                 }
                 updatableFrameColor.setImageName(newImageName);

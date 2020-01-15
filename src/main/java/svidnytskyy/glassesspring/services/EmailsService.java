@@ -134,9 +134,20 @@ public class EmailsService {
                         .orElseGet(() -> product.getImages().get(0))
                         .getImageName();
                 try {
-                    FileSystemResource logoImage2 = new FileSystemResource(new File("public/upload-dir/logo-white.png"));
+                    FileSystemResource logoImage2 = new FileSystemResource(new File(
+                            System.getProperty("user.home") + File.separator
+                                    + "ubuntu" + File.separator
+                                    + "OptiCity" + File.separator
+                                    + "public" + File.separator
+                                    + "upload-dir" + File.separator
+                                    + "logo-white.png"));
                     helper.addInline("logo", logoImage2);
-                    FileSystemResource productImage = new FileSystemResource(new File("public/products-imgs/" + imageName));
+                    FileSystemResource productImage = new FileSystemResource(new File(System.getProperty("user.home") + File.separator
+                            + "ubuntu" + File.separator
+                            + "OptiCity" + File.separator
+                            + "public" + File.separator
+                            + "products-imgs" + File.separator
+                            + imageName));
                     helper.addInline(product.getProductNumber(), productImage);
                 } catch (MessagingException e) {
                     e.printStackTrace();

@@ -26,7 +26,13 @@ public class CategoryService {
         this.categoryDAO = categoryDAO;
     }
 
-    private final Path categoriesImagesLocation = Paths.get("public/categories-imgs");
+//    private final Path categoriesImagesLocation = Paths.get("public/categories-imgs");
+    private final Path categoriesImagesLocation = Paths.get(
+        System.getProperty("user.home") + File.separator
+                + "ubuntu" + File.separator
+                + "OptiCity" + File.separator
+                + "public" + File.separator
+                + "categories-imgs" + File.separator);
 
     public Category save(Category category,
                          MultipartFile categoryImage) {

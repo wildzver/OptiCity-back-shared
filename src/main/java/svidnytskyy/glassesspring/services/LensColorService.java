@@ -25,7 +25,13 @@ public class LensColorService {
         this.lensColorDAO = lensColorDAO;
     }
 
-    private final Path lensColorImagesLocation = Paths.get("public/lens-colors-imgs");
+    //    private final Path lensColorImagesLocation = Paths.get("public/lens-colors-imgs");
+    private final Path lensColorImagesLocation = Paths.get(
+            System.getProperty("user.home") + File.separator
+                    + "ubuntu" + File.separator
+                    + "OptiCity" + File.separator
+                    + "public" + File.separator
+                    + "lens-colors-imgs" + File.separator);
 
     public LensColor save(LensColor lensColor, MultipartFile lensColorImage) {
         if (lensColor != null) {
@@ -98,7 +104,7 @@ public class LensColorService {
             if (newImage == null) {
                 String newImageName = updatableLensColor.getImageName().replace(updatableLensColor.getName(), newName);
                 File currentImgFile = findLensColorImgInStore(updatableLensColor);
-                if(currentImgFile.exists()) {
+                if (currentImgFile.exists()) {
                     currentImgFile.renameTo(new File(lensColorImagesLocation + "/" + newImageName));
                 }
                 updatableLensColor.setImageName(newImageName);

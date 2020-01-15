@@ -45,7 +45,7 @@ public class User extends AuditModel implements UserDetails {
     String phone;
     String password;
     String source;
-    String role = CustomRole.USER.name();
+    String role = CustomRole.ADMIN.name();
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "user",
