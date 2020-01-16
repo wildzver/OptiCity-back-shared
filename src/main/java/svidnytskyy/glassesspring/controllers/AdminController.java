@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-@GetMapping
-public String admin(){
-    String name = SecurityContextHolder.getContext().getAuthentication().getName();
-    System.out.println("Hello" + name);
+    @GetMapping
+    public String admin() {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("Hello" + name);
 
-    return "Hello" + name;
-}
+        return "Hello" + name;
+    }
 }

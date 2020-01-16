@@ -67,8 +67,8 @@ public class WebConfig implements WebMvcConfigurer {
 //        registry.addResourceHandler("/api/frameColor-image/**")
 //                .addResourceLocations(pathToPublicResourceFolder + "/frame-colors-imgs" + File.separator);
 //        registry.addResourceHandler("/*.html", "/*.css", "/*.js", "/*.svg", "/assets/images/**")
-        registry.addResourceHandler("/**")
-                .addResourceLocations(pathToStaticResourceFolder);
+//        registry.addResourceHandler("/**")
+//                .addResourceLocations(pathToStaticResourceFolder);
 //                .addResourceLocations("file:/home/mykola/Documents/окуляри/сайт/glasses-spring/src/main/resources/static/");
         registry.addResourceHandler("/api/product-image/**")
                 .addResourceLocations(pathToPublicResourceFolder + File.separator + "products-imgs" + File.separator);

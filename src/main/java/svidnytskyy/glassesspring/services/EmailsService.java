@@ -136,14 +136,14 @@ public class EmailsService {
                 try {
                     FileSystemResource logoImage2 = new FileSystemResource(new File(
                             System.getProperty("user.home") + File.separator
-                                    + "ubuntu" + File.separator
+//                                    + "ubuntu" + File.separator
                                     + "OptiCity" + File.separator
                                     + "public" + File.separator
                                     + "upload-dir" + File.separator
                                     + "logo-white.png"));
                     helper.addInline("logo", logoImage2);
                     FileSystemResource productImage = new FileSystemResource(new File(System.getProperty("user.home") + File.separator
-                            + "ubuntu" + File.separator
+//                            + "ubuntu" + File.separator
                             + "OptiCity" + File.separator
                             + "public" + File.separator
                             + "products-imgs" + File.separator

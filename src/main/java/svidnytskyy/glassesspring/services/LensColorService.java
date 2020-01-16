@@ -28,7 +28,7 @@ public class LensColorService {
     //    private final Path lensColorImagesLocation = Paths.get("public/lens-colors-imgs");
     private final Path lensColorImagesLocation = Paths.get(
             System.getProperty("user.home") + File.separator
-                    + "ubuntu" + File.separator
+//                    + "ubuntu" + File.separator
                     + "OptiCity" + File.separator
                     + "public" + File.separator
                     + "lens-colors-imgs" + File.separator);

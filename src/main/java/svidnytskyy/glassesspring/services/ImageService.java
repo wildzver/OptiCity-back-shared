@@ -25,7 +25,7 @@ public class ImageService {
 
 //    private final Path productsImagesLocation = Paths.get("public/products-imgs");
     private final Path productsImagesLocation = Paths.get(System.getProperty("user.home") + File.separator
-        + "ubuntu" + File.separator
+//        + "ubuntu" + File.separator
         + "OptiCity" + File.separator
         + "public" + File.separator
         + "products-imgs" + File.separator);
