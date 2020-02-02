@@ -25,10 +25,8 @@ public class FrameColorService {
         this.frameColorDAO = frameColorDAO;
     }
 
-    //    private final Path frameColorImagesLocation = Paths.get("public/frame-colors-imgs");
     private final Path frameColorImagesLocation = Paths.get(
             System.getProperty("user.home") + File.separator
-//                    + "ubuntu" + File.separator
                     + "OptiCity" + File.separator
                     + "public" + File.separator
                     + "frame-colors-imgs" + File.separator);

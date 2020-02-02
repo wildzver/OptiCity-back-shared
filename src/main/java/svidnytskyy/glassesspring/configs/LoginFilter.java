@@ -70,7 +70,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
                 .setSubject(auth.getName())
                 .claim("ROLE", auth.getAuthorities().iterator().next().toString())
 //                .addClaims(Collections.singletonMap("ROLE", auth.getAuthorities().iterator().next().toString()))
-                .signWith(SignatureAlgorithm.HS512, "yes".getBytes())
+                .signWith(SignatureAlgorithm.HS512, "asd".getBytes())
 //                .setExpiration(new Date(System.currentTimeMillis() + 200000))
                 .compact();
         //and add it to header

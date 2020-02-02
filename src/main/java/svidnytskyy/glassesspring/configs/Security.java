@@ -1,6 +1,5 @@
 package svidnytskyy.glassesspring.configs;
 
-import com.google.api.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -44,7 +43,6 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-//                .antMatchers("/").permitAll()
                 .antMatchers("/api").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/addUser").permitAll()
@@ -52,15 +50,9 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/products/**").permitAll()
                 .antMatchers("/api/product-image/**").permitAll()
                 .antMatchers("/api/files/**").permitAll()
-//                .anyRequest().authenticated()
                 .antMatchers("/api/admin").hasRole("ADMIN")
                 .antMatchers("/api/get").hasRole("USER")
                 .and()
-//                .formLogin()
-//                .loginPage("/login").permitAll()
-//                .successForwardUrl("/successLogined")
-//                .failureUrl("/login?error").permitAll()
-//                .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").permitAll()
@@ -75,7 +67,6 @@ public class Security extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("https://opticity.com.ua"));
-//        configuration.setAllowedOrigins(Arrays.asList("https://opticity-client.web.app"));
 //        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList(
@@ -87,9 +78,6 @@ public class Security extends WebSecurityConfigurerAdapter {
         configuration.addExposedHeader("Authorization");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-//        source.registerCorsConfiguration("/", configuration);
-//        source.registerCorsConfiguration("/login", configuration);
-//        source.registerCorsConfiguration("/signin", configuration);
         return source;
     }
 

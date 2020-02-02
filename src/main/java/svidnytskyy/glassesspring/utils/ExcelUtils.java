@@ -13,8 +13,6 @@ import java.util.List;
 @Service
 public class ExcelUtils {
 
-//    @Autowired
-//    private static CategoryDAO categoryDAO;
 
     public static ByteArrayInputStream productsToExcel(List<Product> products) throws IOException {
         String[] COLUMNs = {"id", "product_details_id", "category_id", "lens_color_id", "frame_color_id"};

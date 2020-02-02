@@ -98,9 +98,6 @@ public class ProductsExcelFileService {
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = (Cell) cellsInRow.next();
 
-//                    if (cellIndex == 0) { // id
-//                        product.setId((long) currentCell.getNumericCellValue());
-//                    } else
                     if (cellIndex == 0) { // product_details.model_number
                         productDetails.setModelNumber((int) currentCell.getNumericCellValue());
                     } else if (cellIndex == 1) { // product_details.price
