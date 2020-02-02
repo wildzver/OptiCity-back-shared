@@ -1,5 +1,6 @@
 package svidnytskyy.glassesspring.configs;
 
+import com.google.api.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -73,8 +74,9 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://opticity.com.ua"));
+//        configuration.setAllowedOrigins(Arrays.asList("https://opticity-client.web.app"));
 //        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        configuration.setAllowedOrigins(Arrays.asList(" https://opticity-client.web.app"));
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList(
                 HttpMethod.HEAD.name(),

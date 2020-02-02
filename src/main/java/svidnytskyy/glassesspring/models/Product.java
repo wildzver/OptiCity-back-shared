@@ -59,7 +59,7 @@ public class Product extends AuditModel {
     long id;
 
     @Column(nullable = false, updatable = false)
-    private String uuid;
+    String uuid;
 
     @IndexedEmbedded
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
